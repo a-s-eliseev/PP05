@@ -3,6 +3,7 @@ package app.dao;
 import app.entities.User;
 import app.util.DBHelper;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,9 +12,11 @@ import java.util.List;
 
 public class UserDaoJdbc implements UserDao {
 
+    Connection connection = DBHelper.getConnection();
+
     @Override
     public void insertUser(User user) {
-        try (PreparedStatement preparedStatement = DBHelper.getConnection().prepareStatement("INSERT INTO users (firstName, lastName, mail) VALUES (?, ?, ?);")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users (firstName, lastName, mail) VALUES (?, ?, ?);")) {
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getMail());
@@ -26,7 +29,7 @@ public class UserDaoJdbc implements UserDao {
     @Override
     public User selectUser(Long id) {
         User user = null;
-        try (PreparedStatement preparedStatement = DBHelper.getConnection().prepareStatement("select id, firstName, lastName, mail from users where id =?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("select id, firstName, lastName, mail from users where id =?")) {
             preparedStatement.setLong(1, id);
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -46,7 +49,7 @@ public class UserDaoJdbc implements UserDao {
     public List<User> selectAllUsers() {
         List<User> users = new ArrayList<>();
 
-        try (PreparedStatement preparedStatement = DBHelper.getConnection().prepareStatement("select * from users")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("select * from users")) {
 
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -65,7 +68,7 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public void deleteUser(Long id) throws SQLException {
-        try (PreparedStatement statement = DBHelper.getConnection().prepareStatement("delete from users where id = ?;")) {
+        try (PreparedStatement statement = connection.prepareStatement("delete from users where id = ?;")) {
             statement.setLong(1, id);
             statement.executeUpdate();
         }
@@ -73,7 +76,7 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public void updateUser(User user) throws SQLException {
-        try (PreparedStatement statement = DBHelper.getConnection().prepareStatement("update users set firstName = ?,lastName= ?, mail =? where id = ?;")) {
+        try (PreparedStatement statement = connection.prepareStatement("update users set firstName = ?,lastName= ?, mail =? where id = ?;")) {
 
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());

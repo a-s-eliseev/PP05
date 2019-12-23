@@ -7,9 +7,9 @@ import java.util.List;
 
 public class UserDaoFactory implements UserDao {
 
-    UserDaoHibernate userDaoHibernate = new UserDaoHibernate();
-    UserDaoJdbc userDaoJdbc = new UserDaoJdbc();
-    User user = null;
+    private UserDaoHibernate userDaoHibernate = new UserDaoHibernate();
+    private UserDaoJdbc userDaoJdbc = new UserDaoJdbc();
+    private User user = null;
     private int dao = 2;
 
 
