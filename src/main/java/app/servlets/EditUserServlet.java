@@ -15,7 +15,7 @@ import java.sql.SQLException;
 @WebServlet("/edit")
 public class EditUserServlet extends HttpServlet {
 
-    UserServiceImpl instance = UserServiceImpl.getInstance();
+    private UserServiceImpl instance = UserServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

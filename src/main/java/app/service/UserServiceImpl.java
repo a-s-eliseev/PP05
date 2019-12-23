@@ -10,7 +10,7 @@ public class UserServiceImpl implements UserService {
 
     private static UserServiceImpl userServiceImpl;
 
-    private UserDaoFactory userDaoFactory = new UserDaoFactory();
+    private UserDaoFactory userDaoFactory = UserDaoFactory.getUserDaoFactory(1);
 
     private UserServiceImpl() {}
 

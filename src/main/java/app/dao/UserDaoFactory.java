@@ -5,54 +5,30 @@ import app.entities.User;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserDaoFactory implements UserDao {
+public abstract class UserDaoFactory implements UserDao {
 
-    private UserDaoHibernate userDaoHibernate = new UserDaoHibernate();
-    private UserDaoJdbc userDaoJdbc = new UserDaoJdbc();
-    private User user = null;
-    private int dao = 2;
+    public static final int hibernate = 1;
+    public static final int jdbc = 2;
 
+    public abstract void insertUser(User user);
 
-    public UserDaoFactory() {}
+    public abstract User selectUser(Long id);
 
-    public void insertUser(User user) {
-        if (dao == 1) {
-            userDaoHibernate.insertUser(user);
-        } else {
-            userDaoJdbc.insertUser(user);
-        }
-    }
+    public abstract List<User> selectAllUsers();
 
-    public User selectUser(Long id) {
-        if (dao == 1) {
-            user = userDaoHibernate.selectUser(id);
-        } else {
-            user = userDaoJdbc.selectUser(id);
-        }
-        return user;
-    }
+    public abstract void deleteUser(Long id) throws SQLException;
 
-    public List<User> selectAllUsers() {
-        if (dao == 1) {
-            return userDaoHibernate.selectAllUsers();
-        } else {
-            return userDaoJdbc.selectAllUsers();
-        }
-    }
+    public abstract void updateUser(User user) throws SQLException;
 
-    public void deleteUser(Long id) throws SQLException {
-        if (dao == 1) {
-            userDaoHibernate.deleteUser(id);
-        } else {
-            userDaoJdbc.deleteUser(id);
-        }
-    }
+    public static UserDaoFactory getUserDaoFactory (int whichFactory) {
 
-    public void updateUser(User user) throws SQLException {
-        if (dao == 1) {
-            userDaoHibernate.updateUser(user);
-        } else {
-            userDaoJdbc.updateUser(user);
+        switch (whichFactory) {
+            case hibernate:
+                return new UserDaoHibernate();
+            case jdbc     :
+                return new UserDaoJdbc();
+            default           :
+                return null;
         }
     }
 }

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoJdbc implements UserDao {
+public class UserDaoJdbc extends UserDaoFactory {
 
     Connection connection = DBHelper.getConnection();
 
