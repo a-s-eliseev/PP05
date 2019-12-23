@@ -7,9 +7,6 @@ import java.util.List;
 
 public abstract class UserDaoFactory implements UserDao {
 
-    public static final int hibernate = 1;
-    public static final int jdbc = 2;
-
     public abstract void insertUser(User user);
 
     public abstract User selectUser(Long id);
@@ -20,14 +17,14 @@ public abstract class UserDaoFactory implements UserDao {
 
     public abstract void updateUser(User user) throws SQLException;
 
-    public static UserDaoFactory getUserDaoFactory (int whichFactory) {
+    public static UserDaoFactory getUserDaoFactory(String property) {
 
-        switch (whichFactory) {
-            case hibernate:
+        switch (property) {
+            case "hibernate":
                 return new UserDaoHibernate();
-            case jdbc     :
+            case "jdbc"     :
                 return new UserDaoJdbc();
-            default           :
+            default         :
                 return null;
         }
     }

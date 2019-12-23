@@ -19,10 +19,10 @@ public class DBHelper {
         Connection connection = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(PropertyReader.getProperty("db.host"),
-                    PropertyReader.getProperty("db.login"),
-                    PropertyReader.getProperty("db.password"));
-        } catch (IOException | ClassNotFoundException | SQLException e) {
+            connection = DriverManager.getConnection(PropertyReader.getProperty("db.host", "config.properties"),
+                    PropertyReader.getProperty("db.login", "config.properties"),
+                    PropertyReader.getProperty("db.password", "config.properties"));
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return connection;
