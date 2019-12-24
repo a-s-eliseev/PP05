@@ -13,4 +13,5 @@ public interface UserService {
     User selectUser(Long id) throws IOException;
     void editUser(User user) throws IOException, SQLException;
     void deleteUser(Long id) throws IOException, SQLException;
+    boolean validate(User user);
 }

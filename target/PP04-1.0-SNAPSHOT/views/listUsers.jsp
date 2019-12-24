@@ -17,21 +17,23 @@
         <caption><h2>List of Users</h2></caption>
         <tr>
             <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>EMAIL</th>
+            <th>Login</th>
+            <th>Password</th>
+            <th>EMail</th>
+            <th>Role</th>
             <th>Actions</th>
         </tr>
         <c:forEach var="user" items="${listUser}">
             <tr>
                 <td><c:out value="${user.id}" /></td>
-                <td><c:out value="${user.firstName}" /></td>
-                <td><c:out value="${user.lastName}" /></td>
-                <td><c:out value="${user.mail}" /></td>
+                <td><c:out value="${user.login}" /></td>
+                <td><c:out value="${user.password}" /></td>
+                <td><c:out value="${user.email}" /></td>
+                <td><c:out value="${user.role}" /></td>
                 <td>
-                    <a href="/edit?id=<c:out value='${user.id}' />">Edit</a>
+                    <a href="/admin/edit?id=<c:out value='${user.id}' />">Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="/delete?id=<c:out value='${user.id}' />">Delete</a>
+                    <a href="/admin/delete?id=<c:out value='${user.id}' />">Delete</a>
                 </td>
             </tr>
         </c:forEach>

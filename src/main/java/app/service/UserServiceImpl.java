@@ -47,4 +47,9 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) throws SQLException {
         userDao.deleteUser(id);
     }
+
+    @Override
+    public boolean validate(User user) {
+        return userDao.validate(user);
+    }
 }

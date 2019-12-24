@@ -94,4 +94,33 @@ public class UserDaoHibernate implements UserDao {
             }
         }
     }
+
+    @Override
+    public boolean validate(User user) {
+        Transaction transaction = null;
+        User userValidate = null;
+        String login = user.getLogin();
+        String password = user.getPassword();
+
+
+        try (Session session = DBHelper.getConfiguration().openSession()) {
+            transaction = session.beginTransaction();
+            userValidate = (User) session.createQuery("SELECT u FROM User u WHERE u.login = :login")
+                    .setParameter("login", login)
+                    .uniqueResult();
+
+            if (userValidate != null && userValidate.getPassword().equals(password)) {
+                return true;
+            }
+
+            transaction.commit();
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+
+        return false;
+    }
 }

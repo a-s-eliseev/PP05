@@ -12,5 +12,6 @@ public interface UserDao {
     List<User> selectAllUsers();
     void deleteUser(Long id) throws SQLException;
     void updateUser(User user) throws SQLException;
+    boolean validate(User user);
 
 }

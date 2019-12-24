@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/edit")
+@WebServlet("/admin/edit")
 public class EditUserServlet extends HttpServlet {
 
     private UserServiceImpl instance = UserServiceImpl.getInstance();
@@ -22,7 +22,7 @@ public class EditUserServlet extends HttpServlet {
 
         Long id = Long.parseLong(req.getParameter("id"));
         User existingUser = instance.selectUser(id);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("views/editUser.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("../views/editUser.jsp");
         req.setAttribute("user", existingUser);
         dispatcher.forward(req, resp);
     }
@@ -32,15 +32,16 @@ public class EditUserServlet extends HttpServlet {
 
         Long id = Long.parseLong(req.getParameter("id"));
 
-        String firstName = req.getParameter("firstName");
-        String lastName = req.getParameter("lastName");
-        String mail = req.getParameter("mail");
-        User editUser = new User(id, firstName, lastName, mail);
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        String email = req.getParameter("email");
+        String role = req.getParameter("role");
+        User editUser = new User(id, login, password, email, role);
         try {
             instance.editUser(editUser);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        resp.sendRedirect("/");
+        resp.sendRedirect("/admin");
     }
 }

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/reg")
+@WebServlet("/admin/reg")
 public class AddUserServlet extends HttpServlet {
 
     private UserServiceImpl instance = UserServiceImpl.getInstance();
@@ -24,11 +24,12 @@ public class AddUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String firstName = req.getParameter("firstName");
-        String lastName = req.getParameter("lastName");
-        String mail = req.getParameter("mail");
-        User newUser = new User(firstName, lastName, mail);
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        String email = req.getParameter("email");
+        String role = req.getParameter("role");
+        User newUser = new User(login, password, email, role);
         instance.newUser(newUser);
-        resp.sendRedirect("/");
+        resp.sendRedirect("/admin");
     }
 }

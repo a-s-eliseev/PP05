@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/delete")
+@WebServlet("/admin/delete")
 public class DeleteUserServlet extends HttpServlet {
 
     private UserServiceImpl instance = UserServiceImpl.getInstance();
@@ -22,6 +22,6 @@ public class DeleteUserServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        resp.sendRedirect("/");
+        resp.sendRedirect("/admin");
     }
 }

@@ -9,34 +9,41 @@
 <div style="text-align: center;">
     <h1>User Management</h1>
     <h2>
-        <a href="<c:url value="/"/>">List All Users</a>
+        <a href="<c:url value="/admin"/>">List All Users</a>
     </h2>
 </div>
 <div align="center">
-    <form action="<c:url value="/reg"/>" method="post">
+    <form action="<c:url value="/admin/reg"/>" method="post">
         <table border="1" cellpadding="5">
             <tr>
-                <th>User First Name: </th>
+                <th>Login: </th>
                 <td>
-                    <input type="text" name="firstName" size="45"
-                           value="<c:out value='${user.firstName}' />"
+                    <input type="text" name="login" size="45" required
+                           value="<c:out value='${user.login}' />"
                     />
                 </td>
             </tr>
             <tr>
-                <th>User Last Name: </th>
+                <th>Password: </th>
                 <td>
-                    <input type="text" name="lastName" size="45"
-                           value="<c:out value='${user.lastName}' />"
+                    <input type="text" name="password" size="45" required
+                           value="<c:out value='${user.password}' />"
                     />
                 </td>
             </tr>
             <tr>
-                <th>EMAIL: </th>
+                <th>EMail: </th>
                 <td>
-                    <input type="text" name="mail" size="45"
-                           value="<c:out value='${user.mail}' />"
+                    <input type="email" name="email" size="45" required
+                           value="<c:out value='${user.email}' />"
                     />
+                </td>
+            </tr>
+            <tr>
+                <th>Role: </th>
+                <td>
+                    <input type="radio" name="role" size="45" value="admin"/>Admin<Br>
+                    <input type="radio" name="role" size="45" value="user"/>User
                 </td>
             </tr>
             <tr>

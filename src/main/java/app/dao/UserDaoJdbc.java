@@ -16,10 +16,10 @@ public class UserDaoJdbc implements UserDao{
 
     @Override
     public void insertUser(User user) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users (firstName, lastName, mail) VALUES (?, ?, ?);")) {
-            preparedStatement.setString(1, user.getFirstName());
-            preparedStatement.setString(2, user.getLastName());
-            preparedStatement.setString(3, user.getMail());
+        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users (login, password, email) VALUES (?, ?, ?);")) {
+            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getEmail());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -29,15 +29,16 @@ public class UserDaoJdbc implements UserDao{
     @Override
     public User selectUser(Long id) {
         User user = null;
-        try (PreparedStatement preparedStatement = connection.prepareStatement("select id, firstName, lastName, mail from users where id =?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("select id, login, password, email from users where id =?")) {
             preparedStatement.setLong(1, id);
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                String firstName = rs.getString("firstName");
-                String lastName = rs.getString("lastName");
-                String mail = rs.getString("mail");
-                user = new User(id, firstName, lastName, mail);
+                String login = rs.getString("login");
+                String password = rs.getString("password");
+                String email = rs.getString("email");
+                String role = rs.getString("role");
+                user = new User(id, login, password, email, role);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,10 +56,11 @@ public class UserDaoJdbc implements UserDao{
 
             while (rs.next()) {
                 Long id = rs.getLong("id");
-                String firstName = rs.getString("firstName");
-                String lastName = rs.getString("lastName");
-                String mail = rs.getString("mail");
-                users.add(new User(id, firstName, lastName, mail));
+                String login = rs.getString("login");
+                String password = rs.getString("password");
+                String email = rs.getString("email");
+                String role = rs.getString("role");
+                users.add(new User(id, login, password, email, role));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,14 +78,33 @@ public class UserDaoJdbc implements UserDao{
 
     @Override
     public void updateUser(User user) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement("update users set firstName = ?,lastName= ?, mail =? where id = ?;")) {
+        try (PreparedStatement statement = connection.prepareStatement("update users set login = ?,password= ?, email =? where id = ?;")) {
 
-            statement.setString(1, user.getFirstName());
-            statement.setString(2, user.getLastName());
-            statement.setString(3, user.getMail());
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getEmail());
             statement.setLong(4, user.getId());
 
             statement.executeUpdate();
         }
+    }
+
+    @Override
+    public boolean validate(User user) {
+        boolean status = false;
+
+        try (PreparedStatement statement = connection.prepareStatement("select * from users where login = ? and password = ?")) {
+
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPassword());
+
+            ResultSet rs = statement.executeQuery();
+            status = rs.next();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return status;
     }
 }
