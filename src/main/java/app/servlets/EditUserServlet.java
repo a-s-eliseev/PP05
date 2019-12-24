@@ -17,9 +17,6 @@ public class EditUserServlet extends HttpServlet {
 
     private UserServiceImpl instance = UserServiceImpl.getInstance();
 
-    public EditUserServlet() throws IOException {
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

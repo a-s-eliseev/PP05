@@ -4,7 +4,6 @@ import app.dao.UserDaoFactory;
 import app.entities.User;
 import app.util.PropertyReader;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,9 +11,7 @@ public class UserServiceImpl implements UserService {
 
     private static UserServiceImpl userServiceImpl;
 
-    String property = PropertyReader.getProperty("property", "dao.properties").toLowerCase();
-
-    private UserDaoFactory userDaoFactory = UserDaoFactory.getUserDaoFactory(property);
+    private UserDaoFactory userDaoFactory = UserDaoFactory.getUserDaoFactory();
 
     private UserServiceImpl() {}
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UserDaoJdbc extends UserDaoFactory {
 
-    Connection connection = DBHelper.getConnection();
+    private Connection connection = DBHelper.getConnection();
 
     @Override
     public void insertUser(User user) {
