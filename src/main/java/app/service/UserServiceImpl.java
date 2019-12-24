@@ -1,8 +1,8 @@
 package app.service;
 
+import app.dao.UserDao;
 import app.dao.UserDaoFactory;
 import app.entities.User;
-import app.util.PropertyReader;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,7 +11,7 @@ public class UserServiceImpl implements UserService {
 
     private static UserServiceImpl userServiceImpl;
 
-    private UserDaoFactory userDaoFactory = UserDaoFactory.getUserDaoFactory();
+    private UserDao userDao = UserDaoFactory.getUserDao();
 
     private UserServiceImpl() {}
 
@@ -25,26 +25,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void newUser(User user) {
-        userDaoFactory.insertUser(user);
+        userDao.insertUser(user);
     }
 
     @Override
     public List<User> listUser() {
-        return userDaoFactory.selectAllUsers();
+        return userDao.selectAllUsers();
     }
 
     @Override
     public User selectUser(Long id) {
-        return userDaoFactory.selectUser(id);
+        return userDao.selectUser(id);
     }
 
     @Override
     public void editUser(User user) throws SQLException {
-        userDaoFactory.updateUser(user);
+        userDao.updateUser(user);
     }
 
     @Override
     public void deleteUser(Long id) throws SQLException {
-        userDaoFactory.deleteUser(id);
+        userDao.deleteUser(id);
     }
 }

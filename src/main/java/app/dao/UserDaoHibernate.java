@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import java.util.List;
 
-public class UserDaoHibernate extends UserDaoFactory {
+public class UserDaoHibernate implements UserDao {
 
     @Override
     public void insertUser(User user) {
