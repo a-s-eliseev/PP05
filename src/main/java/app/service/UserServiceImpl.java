@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean validate(User user) {
+    public String validate(User user) {
         return userDao.validate(user);
     }
 }

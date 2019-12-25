@@ -96,7 +96,7 @@ public class UserDaoHibernate implements UserDao {
     }
 
     @Override
-    public boolean validate(User user) {
+    public String validate(User user) {
         Transaction transaction = null;
         User userValidate = null;
         String login = user.getLogin();
@@ -110,7 +110,7 @@ public class UserDaoHibernate implements UserDao {
                     .uniqueResult();
 
             if (userValidate != null && userValidate.getPassword().equals(password)) {
-                return true;
+                return userValidate.getRole();
             }
 
             transaction.commit();
@@ -121,6 +121,6 @@ public class UserDaoHibernate implements UserDao {
             }
         }
 
-        return false;
+        return null;
     }
 }

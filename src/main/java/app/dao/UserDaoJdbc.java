@@ -90,8 +90,7 @@ public class UserDaoJdbc implements UserDao{
     }
 
     @Override
-    public boolean validate(User user) {
-        boolean status = false;
+    public String validate(User user) {
 
         try (PreparedStatement statement = connection.prepareStatement("select * from users where login = ? and password = ?")) {
 
@@ -99,12 +98,14 @@ public class UserDaoJdbc implements UserDao{
             statement.setString(2, user.getPassword());
 
             ResultSet rs = statement.executeQuery();
-            status = rs.next();
+            if (rs.next()) {
+                return rs.getString("role");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return status;
+        return null;
     }
 }
