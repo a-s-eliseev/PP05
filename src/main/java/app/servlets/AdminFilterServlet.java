@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter("/admin")
+@WebFilter(urlPatterns = {"/admin", "/admin/*"})
 public class AdminFilterServlet implements Filter {
 
     @Override

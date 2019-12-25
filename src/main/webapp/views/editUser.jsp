@@ -9,10 +9,7 @@
 <div style="text-align: center;">
     <h1>User Management</h1>
     <h2>
-        <a href="/admin/reg">Add New User</a>
-        &nbsp;&nbsp;&nbsp;
         <a href="/admin">List All Users</a>
-
     </h2>
 </div>
 <div align="center">
