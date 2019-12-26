@@ -1,4 +1,4 @@
-package app.servlets;
+package app.filter;
 
 import app.entities.User;
 
@@ -7,8 +7,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter("/user")
-public class UserFilterServlet implements Filter {
+@WebFilter(urlPatterns = {"/admin", "/admin/*"})
+public class AdminFilterServlet implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -16,13 +16,13 @@ public class UserFilterServlet implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
 
         User user = (User) request.getSession().getAttribute("user");
         String role = user.getRole();
 
-        if (user != null && ("admin".equals(role) || "user".equals(role))) {
+        if (user != null & "admin".equals(role)) {
             chain.doFilter(req, res);
         }
     }
